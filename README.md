@@ -1,10 +1,14 @@
 <div align="center">
 <img src="https://thumbs.gfycat.com/BlissfulBriskJellyfish-size_restricted.gif">
 <h2>25 Days of CSS Animations</h2>
-<p>Code from 25 Days of CSS Animations challenge on CodePen.</p>
+<p>Code from my 25 Days of CSS Animations challenge on CodePen.</p>
 </div>
 
 ### About
+This year I spent 25 days practicing CSS with animations ✨This repo has the source code for
+each animation!
+* [DEV post](https://dev.to/acupoftee/25-days-of-css-animations-teaching-myself-css-through-motion-design-4l10)
+* [CodePen collection](https://codepen.io/collection/DBeLyg)
 
 ### Animations
 * [Day 1: Hello CSS](day-1-hello-css/README.markdown)
