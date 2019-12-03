@@ -1,0 +1,27 @@
+//- link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous")
+.container
+  .circle-container
+    .background-grass
+      - var blades = 0
+      while blades < 14
+        - blades++
+        .background-blade
+    .middle-grass
+      - var blades = 0
+      while blades < 15
+        - blades++
+        .middle-blade
+    .foreground-grass
+      - var blades = 0
+      while blades < 18
+        - blades++
+        .foreground-blade
+    .center.pokeball.animate
+      .pokeball-button
+      .pokeball-ring
+      .pokeball-shine
+      .pokeball-shine-small
+    .stars1
+    .stars2    
+    .stars3
+    .shooting-stars

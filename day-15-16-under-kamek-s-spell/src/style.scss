@@ -1,0 +1,354 @@
+$white: #fffaf0;
+
+// Scene vars
+$container-size: 450px;
+$night-sky: linear-gradient(to bottom, #360033, #0b8793);
+$night-sky-fallback: #2a0845;
+
+// mountain vars
+$mountain-border-radius: 200px;
+$front-hills:#3b0a30;
+$mid-hills: #6a3964;
+$back-hills: #522057;
+$magic-mountain-color: #311c30;
+
+// Trail vars
+$steps: 10;
+$saturation: 80%;
+$lightness: 60%;
+$hue-offset: 320;
+$trail-height: 500px;
+$trail-width: calc(460px / 10);
+$trail-radius: 23px;
+$trail-opacity: 0.6;
+
+// animation vars
+$kamek-timing: 6s;
+$trail-timing: 6s;
+
+// Color lists
+$hsl-colors: ();
+$bg-colors: ();
+
+// Populate $hsl-colors with calculated colors
+// These will be used to create the gradients in the second for loop
+@for $i from 1 through 11 {
+  $color: hsl(360 / $steps * $i + $hue-offset, $saturation, $lightness);
+  $hsl-colors: append($hsl-colors, $color);
+}
+
+// Define gradients with the newly created colors from $hsl-colors
+// Then, populate $background-colors with these newly created gradients
+@for $j from 1 through 10 {
+  $bg: linear-gradient(to right, nth($hsl-colors, $j), nth($hsl-colors, $j + 1));
+  $bg-colors: append($bg-colors, $bg);
+}
+
+// Returns a random number given a min value
+// and max value
+@function randomNum($min, $max) {
+  $rand: random();
+  @return ($min + floor($rand * (($max - $min) + 1)));
+}
+
+// Creates mountain ranges
+@mixin createHills($numHills, $minWidth, $maxWidth, $minHeight, $maxHeight) {
+  @for $i from 1 through $numHills {
+    &:nth-child(#{$i}) {
+      width: randomNum($minWidth, $maxWidth);
+      height: randomNum($minHeight, $maxHeight);
+    }
+  }
+}
+
+body {
+  background-color: $white;
+}
+
+ul {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+.container {
+  background: $night-sky-fallback;
+  background: $night-sky;
+  border-radius: 100%;
+  height: $container-size;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: $container-size;
+  overflow: hidden;
+  /* this fixes the overflow:hidden in Chrome */
+  -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+  mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+
+}
+
+.stars {
+  width: 100%;
+  height: 400px;
+  li {
+    position: absolute;
+    background-color: rgb(255, 242, 123);
+    border-radius: 100%;
+    @for $i from 1 through 60 {
+      &:nth-child(#{$i}) {
+        $starSize: randomNum(0, 3px);
+        width: $starSize;
+        height: $starSize;
+        left: randomNum(0, 400px);
+        top: randomNum(0, 350px);
+      }
+    }
+  }
+}
+
+.cloud {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  background-color: rgb(79, 111, 160);
+  position: absolute;
+  left: -30%;
+  top: 10%;
+  box-shadow: inset 10px 10px rgb(23, 30, 54);
+  animation: moveCloud 60s 1s infinite;
+  &:before {
+    content: '';
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    left: 30px;
+    border-radius: 100%;
+    top: 20px;
+    background-color: rgb(79, 111, 160);
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    left: -20px;
+    border-radius: 100%;
+    top: 10px;
+    background-color: rgb(79, 111, 160);
+    box-shadow: inset 10px 10px rgb(23, 30, 54);
+  }
+
+  &:nth-child(2) {
+    left: -50%;
+    top: 20%;
+    animation: moveCloud 100s 2s infinite;
+  }
+}
+
+.hills {
+  position: absolute;
+  width: 460px;
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+  li {
+    border-top-left-radius: $mountain-border-radius;
+    border-top-right-radius: $mountain-border-radius;
+  }
+}
+
+.magic-mountain {
+  position: absolute;
+  width: 150px;
+  height: 300px;
+  top: 32%;
+  right: 60%;
+  border-top-left-radius: $mountain-border-radius;
+  border-top-right-radius: $mountain-border-radius;
+  background-color: $magic-mountain-color;
+  box-shadow: inset 10px 10px darken($magic-mountain-color, 10%);
+
+  .eyes {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    left: 25%;
+    top: 20%;
+
+    &:before,
+    &:after {
+      content: "";
+      width: 20px;
+      height: 50px;
+      background-color: black;
+      border-radius: 100%;
+      transform: scaleY(0);
+      animation: wakeUp 2s 2s ease-in-out forwards, blink 4s 4s ease-in-out infinite;
+      transition: 0.5s ease;
+    }
+  }
+}
+
+.front-hills {
+  top: 67%;
+  li {
+    background-color: $front-hills;
+    box-shadow: inset 5px 10px darken($front-hills, 10%);
+    @include createHills(10, 300px, 400px, 100px, 200px);
+  }
+}
+
+.mid-hills {
+  top: 70%;
+  li {
+    background-color: $mid-hills;
+    box-shadow: inset 5px 10px darken($mid-hills, 10%);
+    @include createHills(7, 300px, 500px, 100px, 310px);
+  }
+}
+
+.back-hills {
+  top: 72%;
+  li {
+    background-color: $back-hills;
+    box-shadow: inset 5px 10px darken($back-hills, 10%);
+    @include createHills(5, 300px, 500px, 200px, 330px);
+  }
+}
+
+.kamek {
+  animation: fly $kamek-timing linear infinite;
+  position: absolute;
+  transform: scaleX(-1) rotate(10deg);
+  top: 30%;
+  left: -100%;
+  z-index: 2;
+}
+
+.spell-trail {
+  display: flex;
+  opacity: $trail-opacity;
+  height: 500px;
+  width: 460px;
+  position: absolute;
+  top: 45%;
+  transform-origin: center;
+  z-index: 1;
+  // align-items: flex-start;
+  // with help from https://bennettfeely.com/clippy/
+  clip-path: polygon( 15%, 100% 0, 100% 100%, 0 100%);
+  -webkit-clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+
+  .trail {
+    height: 0;
+    min-height: 0;
+    position: relative;
+    width: $trail-width;
+    flex: 1;
+
+    $delay: 0.8s;
+    $percentage: 10%;
+
+    // Creates a new rainbow trail with it's own animation
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation: createTrail $trail-timing $delay ease-in infinite;
+        background-image: nth($bg-colors, $i);
+        border-bottom-left-radius: $trail-radius;
+        border-bottom-right-radius: $trail-radius;
+        $delay: $delay + 0.2s;
+
+        // image source: https://codepen.io/simeydotme/pen/PrQKgo
+        .sparkles {
+          background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/13471/sparkles.gif");
+          background-position: $percentage 0;
+          border-bottom-left-radius: $trail-radius;
+          border-bottom-right-radius: $trail-radius;
+          height: 100%;
+          mix-blend-mode: color-dodge;
+          width: $trail-width;
+          $percentage: $percentage + 10%;
+        }
+      }
+    }
+  }
+}
+
+@keyframes fly {
+  50% {
+    left: 110%;
+    top: 10%;
+  }
+  51% {
+    transform: scaleX(-1) rotate(10deg);
+    top: 30%;
+  }
+  52% {
+    transform: scaleX(1) rotate(10deg);
+  }
+  100% {
+    transform: scaleX(1) rotate(10deg);
+    left: -100%;
+    top: 10%;
+  }
+}
+
+@keyframes createTrail {
+  25% {
+    height: $trail-height;
+    opacity: 1;
+  }
+  65% {
+    height: $trail-height;
+    opacity: 0;
+  }
+  100% {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes wakeUp {
+  60% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes blink {
+  0% {
+    transform: scaleY(1);
+  }
+  18% {
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(0);
+  }
+  25% {
+    transform: scaleY(1);
+  }
+  38% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(0);
+  }
+  45% {
+    transform: scaleY(1);
+  }
+  80% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+@keyframes moveCloud {
+  100% {
+    left: 150%;
+  }
+}

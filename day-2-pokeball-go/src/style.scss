@@ -1,0 +1,624 @@
+@import "compass/css3";
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans:300");
+
+// Pokeball Variables
+$pokeballSize: 200px;
+$pokeballInnerSize: 80px;
+$pokeballBorderSize: 15px;
+$pokeballInnerBorderSize: 4px;
+$black: black;
+$red: #ea0623;
+$white: white;
+
+// Sky Variables
+$background: #fffaf0;
+$sky: linear-gradient(to bottom, #020107 0%, #201b46 40%);
+$skyRadius: 600px;
+$star1ScrollDuration: 100s;
+$star2ScrollDuration: 125s;
+$star3ScrollDuration: 175s;
+$starStartOffset: 500px;
+$star1Size: 1px;
+$star2Size: 2px;
+$star3Size: 3px;
+$star1Count: 800;
+$star2Count: 700;
+$star3Count: 300;
+
+// Grass Variables
+$backgroundGrass: #01636f;
+$middleGrass: #3295ac;
+$foregroundGrass: #203a43;
+$grassBladeHeight: 300px;
+$grassBladeBorder: 100px;
+
+html, body {
+  height: 100%;
+  width: 100%;
+  background: $background;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+// pen credits
+// aside.context {
+//   position: absolute;
+//   text-align: center;
+//   margin: 600px auto;
+//   width: 100%;
+//   overflow-y: scroll;
+//   a {
+//     text-decoration: none;
+//     display: inline-block;
+//     width: 45px;
+//     height: 45px;
+//     border-radius: 50%;
+//     background: transparent;
+//     border: 1px dotted $black;
+//     color: $black;
+//     margin: 5px;
+//     &:hover {
+//       background: rgba(255, 255, 255, 0.5);
+//     }
+//     .icons {
+//       margin-top: 13px;
+//       display: inline-block;
+//       font-size: 20px;
+//     }
+//   }
+// }
+// .container {
+//   margin: 4em auto 0;
+// }
+.circle-container {
+  width: 400px;
+  height: 400px;
+  background: $sky;
+  left: 50%;
+  top: 50%;
+  @include transform(translate(-50%,-50%));
+  overflow: hidden;
+  @include border-radius(100%);
+  position: absolute;
+}
+
+// helper class to center all contents
+.center {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  transform: translate(-50%, -50%);
+}
+// pokeball styles
+.pokeball {
+  border: $pokeballBorderSize solid $black;
+  width: $pokeballSize;
+  height: $pokeballSize;
+  top: 105px;
+  z-index: 2;
+  overflow: hidden;
+  background: $white;
+  @include box-shadow(inset -10px 0 0 10px #ccc);
+  @include border-radius(100%);
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+  }
+  // render red part first
+  &:before {
+    background: $red;
+    width: 100%;
+    height: 50%;
+  }
+  // render black bar after
+  &:after {
+    background: $black;
+    top: calc(50% - 10px);
+    width: 100%;
+    height: 20px;
+  }
+}
+
+// pokeball center button/ring
+.pokeball-button {
+  background: $white;
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: $pokeballBorderSize solid $black;
+  @include border-radius(100%);
+  z-index: 3;
+  @include animation(blink 0.2s alternate 19 0.2s, glowing 1s ease-in-out 5s);
+}
+.pokeball-ring {
+  @extend .pokeball-button;
+  width: 45px;
+  height: 45px;
+  border: $pokeballInnerBorderSize solid $black;
+}
+// blinking animation because we caught a pokemon!
+@include keyframes(blink) {
+  from {
+    background: #e74c3c;
+    box-shadow: 0px 0px 30px #e74c3c;
+    //border-color: #ef8b80;
+  }
+  to {
+    background: $white;
+  }
+}
+// glowing animation, because it's ours!
+@include keyframes(glowing) {
+  50% {
+    box-shadow: 0px 0px 60px #fff;
+    border-color: #595959;
+  }
+}
+
+// light reflections
+.pokeball-shine {
+  height: 10px;
+  width: 30px;
+  @include border-radius(200px);
+  position: absolute;
+  background: #fff;
+  opacity: 0.5;
+  left: 30px;
+  top: 25px;
+  @include transform(rotate(-44deg));
+}
+.pokeball-shine-small {
+  @extend .pokeball-shine;
+  width: 10px;
+  left: 18px;
+  top: 50px;
+}
+// pokeball animation
+.animate {
+  @include animation(fall 0.6s ease-in-out, sway 2s ease-in-out infinite);
+  transform-origin: bottom center;
+  @include transition(all 0.5s ease);
+}
+
+// fall anination with bounces
+@include keyframes(fall) {
+  0% {
+    top: -110px;
+  }
+  35% {
+    top: 105px;
+  }
+  50% {
+    top: 70px;
+  }
+  65% {
+    top: 105px;
+  }
+  85% {
+    top: 85px;
+  }
+  100% {
+    top: 105px;
+  }
+}
+// pokeball sway keyframes
+@include keyframes(sway) {
+  0% {
+    left: -2%;
+    @include transform(rotate(-10deg));
+  }
+  50% {
+    left: 5%;
+    @include transform(rotate(10deg));
+  }
+  100% {
+    left: -2%;
+    @include transform(rotate(-10deg));
+  }
+}
+
+// background grass/blades
+.background-grass {
+  position: absolute;
+  width: 400px;
+  .background-blade {
+    position: absolute;
+    background: $backgroundGrass;
+    z-index: 2;
+    &:nth-child(1) {
+      height: $grassBladeHeight;
+      width: 38px;
+      top: 185px;
+      left: -1px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(2) {
+      left: 34px;
+      width: 24px;
+      height: $grassBladeHeight;
+      top: 190px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(3) {
+      left: 56px;
+      width: 37px;
+      height: $grassBladeHeight;
+      top: 210px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(4) {
+      left: 89px;
+      width: 17px;
+      height: $grassBladeHeight;
+      top: 210px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(5) {
+      left: 104px;
+      width: 43px;
+      height: $grassBladeHeight;
+      top: 200px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(6) {
+      left: 270px;
+      width: 47px;
+      height: $grassBladeHeight;
+      top: 180px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(7) {
+      left: 315px;
+      width: 27px;
+      height: $grassBladeHeight;
+      top: 200px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(8) {
+      left: 340px;
+      width: 27px;
+      height: $grassBladeHeight;
+      top: 190px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(9) {
+      left: 365px;
+      width: 40px;
+      height: $grassBladeHeight;
+      top: 180px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(10) {
+      left: 140px;
+      width: 50px;
+      height: $grassBladeHeight;
+      top: 210px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(11) {
+      left: 180px;
+      width: 40px;
+      height: $grassBladeHeight;
+      top: 205px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(12) {
+      left: 210px;
+      width: 40px;
+      height: $grassBladeHeight;
+      top: 215px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(13) {
+      left: 220px;
+      width: 40px;
+      height: $grassBladeHeight;
+      top: 205px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(14) {
+      left: 255px;
+      width: 25px;
+      height: $grassBladeHeight;
+      top: 195px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+  }
+}
+
+// middle grass/blades
+.middle-grass {
+  position: absolute;
+  width: 400px;
+  .middle-blade {
+    position: absolute;
+    background: $middleGrass;
+    z-index: 2;
+    &:nth-child(1) {
+      height: $grassBladeHeight;
+      width: 45px;
+      top: 215px;
+      left: -1px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(2) {
+      left: 40px;
+      width: 30px;
+      height: $grassBladeHeight;
+      top: 205px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(3) {
+      left: 66px;
+      width: 24px;
+      height: $grassBladeHeight;
+      top: 230px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(4) {
+      left: 89px;
+      width: 35px;
+      height: $grassBladeHeight;
+      top: 230px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(5) {
+      left: 115px;
+      width: 50px;
+      height: $grassBladeHeight;
+      top: 220px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(6) {
+      left: 280px;
+      width: 50px;
+      height: $grassBladeHeight;
+      top: 210px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(7) {
+      left: 320px;
+      width: 35px;
+      height: $grassBladeHeight;
+      top: 210px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(8) {
+      left: 350px;
+      width: 20px;
+      height: $grassBladeHeight;
+      top: 220px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(9) {
+      left: 360px;
+      width: 40px;
+      height: $grassBladeHeight;
+      top: 210px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(10) {
+      left: 260px;
+      width: 40px;
+      height: $grassBladeHeight;
+      top: 210px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(11) {
+      left: 240px;
+      width: 40px;
+      height: $grassBladeHeight;
+      top: 220px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(12) {
+      left: 220px;
+      width: 40px;
+      height: $grassBladeHeight;
+      top: 230px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(13) {
+      left: 200px;
+      width: 30px;
+      height: $grassBladeHeight;
+      top: 240px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(14) {
+      left: 160px;
+      width: 45px;
+      height: $grassBladeHeight;
+      top: 240px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+  }
+}
+
+// foreground grass/blades
+.foreground-grass {
+  position: absolute;
+  width: 400px;
+  .foreground-blade {
+    position: absolute;
+    background: $foregroundGrass;
+    z-index: 3;
+    &:nth-child(1) {
+      height: $grassBladeHeight;
+      width: 20px;
+      top: 230px;
+      left: -1px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(2) {
+      height: $grassBladeHeight;
+      width: 20px;
+      top: 250px;
+      left: 15px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(3) {
+      height: $grassBladeHeight;
+      width: 35px;
+      top: 240px;
+      left: 30px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(4) {
+      height: $grassBladeHeight;
+      top: 250px;
+      width: 35px;
+      left: 60px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(5) {
+      height: $grassBladeHeight;
+      top: 265px;
+      width: 40px;
+      left: 90px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(6) {
+      height: $grassBladeHeight;
+      top: 280px;
+      width: 20px;
+      left: 115px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(7) {
+      height: $grassBladeHeight;
+      top: 275px;
+      width: 40px;
+      left: 130px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(8) {
+      height: $grassBladeHeight;
+      top: 300px;
+      width: 20px;
+      left: 160px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(9) {
+      height: $grassBladeHeight;
+      top: 295px;
+      width: 40px;
+      left: 175px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(10) {
+      height: $grassBladeHeight;
+      top: 300px;
+      width: 15px;
+      left: 210px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(11) {
+      height: $grassBladeHeight;
+      top: 305px;
+      width: 30px;
+      left: 220px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(12) {
+      height: $grassBladeHeight;
+      top: 300px;
+      width: 45px;
+      left: 240px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(13) {
+      height: $grassBladeHeight;
+      top: 280px;
+      width: 30px;
+      left: 260px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(14) {
+      height: $grassBladeHeight;
+      top: 280px;
+      width: 20px;
+      left: 285px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(15) {
+      height: $grassBladeHeight;
+      top: 270px;
+      width: 40px;
+      left: 300px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(16) {
+      height: $grassBladeHeight;
+      top: 250px;
+      width: 40px;
+      left: 320px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+    &:nth-child(17) {
+      height: $grassBladeHeight;
+      top: 240px;
+      width: 20px;
+      left: 350px;
+      @include border-top-right-radius($grassBladeBorder);
+    }
+    &:nth-child(18) {
+      height: $grassBladeHeight;
+      top: 250px;
+      width: 45px;
+      left: 350px;
+      @include border-top-left-radius($grassBladeBorder);
+    }
+  }
+}
+
+// Generates star field
+@function create-stars($n, $w, $h) {
+  $stars: "#{random($w)}vh #{random($h)}vh #FFF";
+  @for $i from 2 through $n {
+    $stars: "#{$stars} , #{random($w)}vh #{random($h)}vh #FFF";
+  }
+  @return unquote($stars);
+}
+
+@mixin star-template($nStars, $starSize, $scrollSpeed) {
+  z-index: 1;
+  width: $starSize;
+  height: $starSize;
+  @include border-radius(50%);
+  @include box-shadow(create-stars($nStars, $skyRadius, $skyRadius - 100));
+  @include animation(star-animation $scrollSpeed linear infinite);
+  &:after {
+    content: " ";
+    top: -$starStartOffset;
+    width: $starSize;
+    height: $starSize;
+    @include border-radius(50%);
+    position: absolute;
+    @include box-shadow(create-stars($nStars, $skyRadius*0.5, $skyRadius*0.8));
+  }
+}
+
+// star animations
+@include keyframes(star-animation) {
+  0% {
+    transform: rotate(-20deg) translateX(-$skyRadius);
+  }
+  100% {
+    transform: rotate(-20deg) translateX($skyRadius);
+  }
+}
+
+.stars1 {
+  @include star-template($star1Count, $star1Size, $star1ScrollDuration);
+}
+.stars2 {
+  @include star-template($star2Count, $star2Size, $star2ScrollDuration);
+}
+.stars3 {
+  @include star-template($star3Count, $star3Size, $star3ScrollDuration);
+}

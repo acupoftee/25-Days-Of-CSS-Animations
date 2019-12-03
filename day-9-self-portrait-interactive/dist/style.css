@@ -1,0 +1,304 @@
+body {
+  background: #020916;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+
+.container {
+  background: #5ab3b5;
+  overflow: hidden;
+  width: 300px;
+  height: 300px;
+  border-radius: 100%;
+  transition: all 0.5s ease;
+}
+.container:hover {
+  background: pink;
+}
+.container:hover .cheeks::before, .container:hover .cheeks::after {
+  background: #870d24;
+}
+.container:hover .heart {
+  background: pink;
+}
+.container:hover .heart:before, .container:hover .heart:after {
+  background: pink;
+}
+.container:hover .shirt-button {
+  background: #b51231;
+}
+.container:hover .heart-button {
+  z-index: 1;
+  color: white;
+  animation: pulse 1s 0.5s ease-out infinite;
+}
+
+.heart {
+  width: 300px;
+  height: 300px;
+  background: #020916;
+  position: absolute;
+  top: 30px;
+  z-index: -1;
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+}
+.heart:before, .heart:after {
+  content: "";
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  border-radius: 100%;
+  background: #020916;
+  transition: all 0.5s ease;
+}
+.heart:before {
+  top: -150px;
+  left: 0;
+}
+.heart:after {
+  left: -150px;
+  top: 0;
+}
+
+.avatar-body {
+  width: 60px;
+  height: 30px;
+  background: #b51231;
+  position: absolute;
+  left: calc(50% - 30px);
+  top: 75%;
+  z-index: 2;
+}
+.avatar-body:after {
+  content: "";
+  position: absolute;
+  border-bottom: 20px solid #e6e6e6;
+  border-left: 20x solid transparent;
+  border-right: 15px solid transparent;
+  height: 0;
+  width: 22px;
+  right: calc(50% - 10px);
+  top: -20px;
+}
+.avatar-body:before {
+  content: "";
+  position: absolute;
+  border-bottom: 20px solid #cccccc;
+  border-left: 15px solid transparent;
+  border-right: 0px solid transparent;
+  height: 0;
+  width: 25px;
+  right: 2px;
+  top: -20px;
+}
+
+.shirt-button {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 100%;
+  left: calc(50% - 5px);
+  top: 10px;
+}
+
+.heart-button {
+  position: absolute;
+  color: #b51231;
+  font-size: 20px;
+  top: -15px;
+  left: 35%;
+  z-index: -1;
+}
+
+.avatar-head {
+  position: absolute;
+  z-index: 3;
+  width: 90px;
+  height: 120px;
+  background: #c74b16;
+  border-radius: 40px;
+  left: calc(50% - 45px);
+  top: 70px;
+}
+
+.avatar-neck {
+  position: absolute;
+  width: 40px;
+  height: 50px;
+  background: #c74b16;
+  left: calc(50% - 20px);
+  top: 60%;
+  box-shadow: inset 0px 16px 0px 0px #993a11;
+}
+
+.avatar-hair {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  background: #020916;
+  border-radius: 100%;
+  left: calc(50% - 65px);
+  top: 12%;
+  box-shadow: inset 10px -1px #061c45;
+}
+.avatar-hair:after {
+  content: "";
+  position: absolute;
+  width: 90px;
+  height: 50px;
+  background: #020916;
+  border-radius: 0px 200px 0px 200px;
+  z-index: 4;
+  left: 40px;
+  top: 20px;
+  transform: rotate(10deg);
+}
+
+.avatar-ponytail {
+  width: 90px;
+  height: 120px;
+  position: absolute;
+  background: #020916;
+  left: 25%;
+  top: 40%;
+  border-radius: 200px;
+}
+.avatar-ponytail:after {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 70px;
+  background: #020916;
+  border-radius: 0 0 300px 300px;
+  top: 60%;
+  right: -5%;
+}
+
+.avatar-face {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  left: calc(50% - 35px);
+  top: calc(50% - 50px);
+  z-index: 5;
+}
+.avatar-face .eyes {
+  dispaly: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 12px;
+  left: -7px;
+}
+.avatar-face .eyes::before, .avatar-face .eyes::after {
+  display: inline-block;
+  content: "";
+  width: 15px;
+  height: 40px;
+  background: #020916;
+  margin: 0 14px;
+  border-radius: 200px;
+  animation: blink 3s ease-in-out infinite;
+}
+.avatar-face .glasses {
+  position: relative;
+  width: 5px;
+  height: 2px;
+  background: #f89714;
+  left: 6.5%;
+  top: 25px;
+}
+.avatar-face .glasses .left, .avatar-face .glasses .right {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 100%;
+  border: 2px solid #f89714;
+  left: -52px;
+  top: -22px;
+  overflow: hidden;
+  z-index: 2;
+}
+.avatar-face .glasses .right {
+  left: 4px;
+}
+
+.shine {
+  position: absolute;
+}
+.shine:before, .shine:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 100px;
+  background: white;
+  opacity: 0.3;
+  transform: rotate(30deg);
+  top: -25px;
+  left: 5px;
+}
+.shine:after {
+  width: 5px;
+  left: 30px;
+}
+
+.cheeks {
+  dispaly: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 55px;
+  left: -25px;
+}
+.cheeks::before, .cheeks::after {
+  display: inline-block;
+  content: "";
+  width: 20px;
+  height: 20px;
+  background: #c74b16;
+  margin: 0 20px;
+  opacity: 0.5;
+  transition: all 1s ease;
+  border-radius: 200px;
+}
+
+@keyframes blink {
+  0% {
+    transform: scaleY(1);
+  }
+  18% {
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(0);
+  }
+  25% {
+    transform: scaleY(1);
+  }
+  38% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(0);
+  }
+  45% {
+    transform: scaleY(1);
+  }
+  80% {
+    transform: scaleY(1);
+  }
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

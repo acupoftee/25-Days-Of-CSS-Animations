@@ -1,0 +1,409 @@
+$background: #fffaf0;
+$container-background: lighten(#c7166f, 5%);
+
+// trail animation vars
+$trail-color: lighten(#f89714, 10%);
+$trail-shine: lighten($trail-color, 20%);
+$trail-offset: 30px;
+$trail-height: 400px;
+$trail-fin: 600px;
+$trail-border-radius: 200px;
+
+// body vars 
+$hair: #020916;
+$shirt: darken(#800064, 5%);
+// $shirt: darken(#6c16c7, 5%);
+$skin: #c74b16;
+$smile-height: 30;
+$smile-width: $smile-height * 2;
+$mouth: #6E171F;
+
+// animation vars
+$body-timing: .7s;
+
+@function randomNumber($min, $max) {
+    $rand: random();
+    $randomNum: $min + floor($rand * (($max - $min) + 1));
+    @return $randomNum;
+}
+
+body {
+    background: $background;
+}
+
+.trails {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    left: 0;
+    position: absolute;
+    li {
+        background-color: $trail-color;
+        list-style: none;
+        position: relative;
+        border-radius: $trail-border-radius;
+        height: $trail-height;
+        &:nth-child(1) {
+            animation: flightTrail .22s linear infinite;
+            width: 50px;
+            &:after {
+                content: '';
+                background-color: $trail-shine;
+                width: 15px;
+                height: 350px;
+                position: absolute;
+                left: 15%;
+                top: 5%;
+                border-radius: $trail-border-radius;
+            }
+        }
+        &:nth-child(2) {
+            animation: flightTrail .28s .1s linear infinite;
+            width: 75px;
+            &:after {
+                content: '';
+                background-color: $trail-shine;
+                width: 20px;
+                height: 350px;
+                position: absolute;
+                left: 15%;
+                top: 5%;
+                border-radius: $trail-border-radius;
+            }
+        }
+        &:nth-child(3) {
+            animation: flightTrail .18s .03s linear infinite;
+            width: 15px;
+        }
+        &:nth-child(4) {
+            animation: flightTrail .25s .01s linear infinite;
+            width: 65px;
+            &:after {
+                content: '';
+                background-color: $trail-shine;
+                width: 20px;
+                height: 350px;
+                position: absolute;
+                left: 15%;
+                top: 5%;
+                border-radius: $trail-border-radius;
+            }
+        }
+        &:nth-child(5) {
+            animation: flightTrail .4s .01s linear infinite;
+            width: 40px;
+            &:after {
+                background-color: $trail-shine;
+                border-radius: $trail-border-radius;
+                content: '';
+                height: 350px;
+                left: 15%;
+                position: absolute;
+                top: 5%;
+                width: 20px;
+            }
+        }
+    }
+}
+
+.container {
+    background: $container-background;
+    border-radius: 100%;
+    height: 500px;
+    left: 50%;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%)  scale(.85);
+    width: 500px;
+}
+
+.super-girl {
+    animation: easeUpBody $body-timing ease-in-out alternate infinite;
+    height: 400px;
+    left: calc(50% - 100px);
+    position: absolute;
+    top: calc(50% - 150px);
+    width: 200px;
+}
+
+.head {
+    animation: easeUpHead $body-timing ease-in-out alternate infinite;
+    background-color: lighten($skin, 5%);
+    border-radius: 100px;
+    box-shadow: inset -5px -10px darken($skin, 5%);
+    height: 210px;
+    left: calc(50% - 80px);
+    position: absolute;
+    width: 160px;
+    z-index: 4;
+
+    .face {
+        height: 150px;
+        left: calc(50% - 75px);
+        position: absolute;
+        top: calc(50% - 75px);
+        width: 150px;
+
+        .eyes {
+            animation: easeUpFace $body-timing ease-in-out alternate infinite;
+            display: flex;
+            justify-content: space-between;
+            left: 6%;
+            position: absolute;
+            top: 60px;
+            &::before,
+            &::after {
+                border-radius: 200px;
+                box-shadow: inset 0px 10px $hair;
+                content: '';
+                height: 45px;
+                margin: 0 10px;
+                width: 45px;
+            }
+        }
+
+        .smile {
+            background-color: $background;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            height: $smile-height + px;
+            left: calc(50% - 30px);
+            overflow: hidden;
+            position: absolute;
+            top: 80%;
+            width: $smile-width + px;
+        }
+    }
+}
+
+.hair {
+    background-color: $hair;
+    border-radius: 100%;
+    box-shadow: inset 15px 0px lighten($hair, 15%);
+    height: 220px;
+    left: calc(50% - 110px);
+    position: absolute;
+    top: -12%;
+    width: 220px;
+
+    &::after {
+        animation: easeUpHair $body-timing ease-in-out alternate infinite;
+        background-color: $hair;
+        border-radius: 0px 300px 0px 300px;
+        content: '';
+        height: 110px;
+        left: 63px;
+        position: absolute;
+        top: 25px;
+        transform: rotate(-5deg);
+        width: 130px;
+        z-index: 5;
+    }
+}
+
+.neck {
+    background-color: $skin; 
+    border-bottom-left-radius: 100%;
+    border-bottom-right-radius: 100%;
+    height: 70px;
+    left: calc(50% - 30px);
+    position: absolute;
+    top: 45%;
+    width: 60px;
+    z-index: 4;
+
+    &::after {
+        background-color: darken($skin, 7%);
+        border-bottom-left-radius: 100%;
+        border-bottom-right-radius: 100%;
+        content: '';
+        height: 40px;
+        position: absolute;
+        width: 100%;
+    }
+}
+
+.body {
+    background-color: $shirt;
+    border-top-left-radius: 200px;
+    border-top-right-radius: 200px;
+    height: 300px;
+    left: calc(50% - 80px);
+    position: absolute;
+    top: 50%;
+    width: 160px;
+}
+
+.ponytail {
+    background-color: $hair;
+    border-radius: 200px;
+    box-shadow: inset 15px 0px lighten($hair, 20%);
+    height: 200px;
+    left: -20px;
+    position: absolute;
+    top: 30%;
+    width: 120px;
+
+    &:after {
+        background: $hair;
+        border-radius: 0 0 400px 400px;
+        box-shadow: inset 15px 0px lighten($hair, 20%);
+        content: '';
+        height: 100px;
+        left: -34%;
+        position: absolute;
+        width: 160px;
+        top: 60%;
+      }
+}
+
+.arm-left {
+    animation: rotateLeft $body-timing ease-in-out alternate infinite;
+    background-color: $shirt;
+    border-top-left-radius: 200px;
+    border-bottom-left-radius: 200px;
+    height: 60px;
+    left: 10%;
+    position: absolute;
+    top: 70%;
+    transform: rotate(35deg);
+    transform-origin: 80% 15%;
+    width: 200px;
+    z-index: 2;
+
+    .hand {
+        background-color: lighten($skin, 5%);
+        border-top-left-radius: 200px;
+        border-bottom-left-radius: 200px;
+        height: 60px;
+        width: 60px;
+    }
+}
+
+.arm-right {
+    animation: rotateRight $body-timing ease-in-out alternate infinite;
+    background-color: $shirt;
+    border-top-left-radius: 200px;
+    border-bottom-left-radius: 200px;
+    height: 60px;
+    left: 33%;
+    position: absolute;
+    top: 75%;
+    transform: rotate(145deg);
+    transform-origin: 80% 15%;
+    width: 200px;
+
+    .hand {
+        background-color: lighten($skin, 5%);
+        border-top-left-radius: 200px;
+        border-bottom-left-radius: 200px;
+        height: 60px;
+        width: 50px;
+    }
+}
+
+.fingers {
+    // display: flex;
+    // flex-direction: column;
+    left: -23%;
+    list-style: none;
+    position: absolute;
+    top: -38%;
+    // top: %;
+    li {
+        background-color: lighten($skin, 4%);
+        box-shadow: inset -4px 4px darken($skin, 10%);
+        position: relative;
+        border-radius: $trail-border-radius;
+        margin: auto -1%;
+        height: 19px;
+        width: 45px;
+        &:nth-child(1), 
+        &:nth-child(4) {
+            left: 20%;
+        }
+    }
+}
+.thumb {
+    background-color: darken($skin, 5%);
+    border-radius: 100%;
+    height: 25px;
+    left: 12%;
+    position: absolute;
+    top: -5%;
+    width: 25px;
+
+    &::after {
+        background-color: $skin;
+        border-radius: $trail-border-radius;
+        box-shadow: inset -4px 4px darken($skin, 10%);
+        content: '';
+        height: 35px;
+        position: absolute;
+        width: 18px;
+    }
+}
+@keyframes flightTrail {
+    0% {
+        transform: translate(0, -$trail-height);
+    }
+    100% {
+        transform: translate(0, $trail-fin);
+    }
+}
+
+@keyframes rotateLeft {
+    from {
+        transform: rotate(35deg);
+    }
+    to {
+        transform: rotate(50deg);
+    }
+}
+
+@keyframes rotateRight {
+    from {
+        transform: rotate(145deg);
+    }
+    to {
+        transform: rotate(125deg);
+    }
+}
+
+@keyframes easeUpBody {
+    from {
+        transform: translateY(2%);
+    } 
+    to {
+        transform: translateY(5%);
+    }
+}
+
+
+@keyframes easeUpHead {
+    from {
+        transform: translateY(0%);
+    } 
+    to {
+        transform: translateY(1.5%);
+    }
+}
+
+@keyframes easeUpHair {
+    from {
+        transform: translateY(0%);
+    } 
+    to {
+        transform: translateY(1.5%);
+    }
+}
+
+@keyframes easeUpFace {
+    from {
+        transform: translateY(0%);
+    } 
+    to {
+        transform: scaleY(.9);
+    }
+}

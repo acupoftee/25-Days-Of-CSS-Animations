@@ -1,0 +1,358 @@
+@import url("https://fonts.googleapis.com/css?family=Archivo+Black");
+
+$background: #5ab3b5;
+$font: "Archivo Black";
+$headHeight: 90px;
+$headWidth: 70px;
+$headTop: 10px;
+$skinTone: #b5612c;
+$bangsHeight: 50px;
+$bangsTop: -12px;
+$bangsWidth: 94%;
+$shirt: #b51231;
+$glasses: #f89714;
+
+
+html,body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: $background;
+  margin: 0;
+  padding: 0;
+  cursor: url('https://acupoftee.github.io/images/slice-of-pizza.png'), auto;
+}
+p {
+  font-family: $font;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 180px;
+  color: lighten($background, 20%);
+}
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  .me {
+    transition: all 0.5s ease;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 80px;
+    height: 160px;
+    .head {
+      position: absolute;
+      width: $headWidth;
+      height: $headHeight;
+      top: $headTop;
+      background: $skinTone;
+      border-radius: 100px;
+      left: 4px;
+      transition: all 0.5s ease;
+      .bangs {
+        position: absolute;
+        width: $bangsWidth;
+        height: $bangsHeight;
+        top: $bangsTop;
+        transition: all 0.5s ease;
+        span {
+          //transition: all 0.5 ease;
+          position: absolute;
+          width: 30px;
+          height: 30px;
+          background: black;
+          border-radius: 100%;
+          &:nth-child(2) {
+            left: 20px;
+          }
+          &:nth-child(3) {
+            left: 40px;
+          }
+        }
+      }
+      .bangs-upper {
+        @extend .bangs;
+        margin-top: -12px;
+      }
+      &.look-left {
+        width: $headWidth;
+        left: -10px;
+        .bangs {
+          width: $bangsWidth + 12;
+          left: -7px;
+        }
+      }
+      &.look-right {
+        width: $headWidth;
+        left: 15px;
+        .bangs {
+          width: $bangsWidth + 12;
+          left: 5px;
+        }
+      }
+    } // end head
+    .face {
+      transition: all 0.5s ease;
+      position: absolute;
+      top: 30px;
+      .eyes {
+        display: flex;
+        justify-content: space-between;
+        &:before,
+        &:after {
+          content: "";
+          display: block;
+          position: relative;
+          transform-origin: center;
+          width: 9px;
+          height: 30px;
+          background: black;
+          border-radius: 200px;
+          left: 3px;
+          margin: -2px 12px;
+          animation: blink 4s infinite;
+          transition: all 0.5s ease;
+        }
+      } // end eyes
+      .glasses {
+        position: relative;
+        width: 5px;
+        height: 2px;
+        background: $glasses;
+        left: 50%;
+        top: 15px;
+        .left {
+          position: absolute;
+          width: 40px;
+          height: 40px;
+          background: transparent;
+          border-radius: 100%;
+          border: 2px solid $glasses;
+          left: -42px;
+          top: -22px;
+          overflow: hidden;
+          z-index: 2;
+        }
+        .right {
+          @extend .left;
+          left: 4px;
+        }
+      } // end glasses
+      &.look-left {
+        left: -7px;
+      }
+      &.look-right {
+        left: 5px;
+      }
+      // &.look-down {
+      //   top: 40px;
+      //   .eyes:before, .eyes:after {
+      //     height: 25px;
+      //     margin-top: 2px;
+      //   }
+      // }
+      // &.look-up {
+      //   top: 20px;
+      //   .eyes:before, .eyes:after {
+      //     height: 25px;
+      //     margin-top: -2px;
+      //   }
+      // }
+      //  &.look-bottom-right {
+      //   top: 40px;
+      //   left: 5px;
+      //   .eyes:before, .eyes:after {
+      //     height: 25px;
+      //     margin-top: -1px;
+      //   }
+      // }
+      // &.look-bottom-left {
+      //   top: 40px;
+      //   left: -7px;
+      //   .eyes:before, .eyes:after {
+      //     height: 25px;
+      //     margin-top: -1px;
+      //   }
+      // }
+      // &.look-top-right {
+      //   top: 20px;
+      //   left: 5px;
+      //   .eyes:before, .eyes:after {
+      //     height: 25px;
+      //     margin-top: -2px;
+      //   }
+      // }
+      //  &.look-top-left {
+      //   top: 20px;
+      //   left: -7px;
+      //   .eyes:before, .eyes:after {
+      //     height: 25px;
+      //     margin-top: -2px;
+      //   }
+      // }
+    } // end face
+
+    .shine {
+      position: absolute;
+      &:before {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 100px;
+        background: white;
+        opacity: 0.3;
+        transform: rotate(30deg);
+        top: -30px;
+        left: 5px;
+      }
+      &:after {
+        @extend .shine:before;
+        width: 5px;
+        left: 30px;
+      }
+    } // end shine
+    .neck {
+      position: absolute;
+      width: 20px;
+      height: 60px;
+      background: $skinTone;
+      top: 60px;
+      left: 30px;
+      border-radius: 0px 0px 100px 100px;
+      overflow: hidden;
+      &:before {
+        content: "";
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background: darken($skinTone, 10%);
+        border-radius: 100%;
+        top: -12px;
+        left: -18px;
+        transition: all 0.5s ease;
+      }
+      &.look-left:before {
+        left: -38px;
+      }
+      &.look-right:before {
+        left: -5px;
+      }
+    } // end neck
+
+    .shirt {
+      position: absolute;
+      width: 80px;
+      height: 40px;
+      background: $shirt;
+      top: 105px;
+      border-radius: 100px 100px 10px 10px;
+      overflow: hidden;
+      &:after {
+        content: "\2665";
+        position: absolute;
+        color: darken($shirt, 10%);
+        top: 15px;
+        left: 50px;
+      }
+      
+    } // end shirt
+    .hair {
+      transition: all 0.5s ease;
+      position: absolute;
+      width: 90px;
+      height: 120px;
+      left: -8%;
+      top: -10%;
+      .first-row {
+        position: absolute;
+        span {
+          width: 30px;
+          height: 30px;
+          border-radius: 100%;
+          background: black;
+          position: absolute;
+          &:nth-child(1) {
+            top: 5px;
+          }
+          &:nth-child(2) {
+            left: 30px;
+          }
+          &:nth-child(3) {
+            left: 60px;
+            top: 5px;
+          }
+          &:nth-child(4) {
+            left: 15px;
+          }
+          &:nth-child(5) {
+            border-radius: 80%;
+            left: 45px;
+          }
+        }
+      }
+      .second-row {
+        @extend .first-row;
+        top: 20px;
+      }
+      .third-row {
+        @extend .first-row;
+        top: 40px;
+      }
+      .fourth-row {
+        @extend .first-row;
+        top: 60px;
+        left: 2px;
+        span {
+          width: 25px;
+          height: 25px;
+        }
+      }
+      .fifth-row {
+        @extend .first-row;
+        top: 80px;
+        left: 7.2px;
+        span {
+          width: 15px;
+          height: 15px;
+        }
+      }
+      &.look-left {
+        width: 55px;
+        left: -17px;
+      }
+      &.look-right {
+        width: 55px;
+        left: 2px;
+      }
+    } // end hair
+  } // end me (but please don't actually)
+} // end container
+
+@keyframes blink {
+  0% {
+    transform: scaleY(1);
+  }
+  18% {
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(0);
+  }
+  25% {
+    transform: scaleY(1);
+  }
+  38% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(0);
+  }
+  45% {
+    transform: scaleY(1);
+  }
+  80% {
+    transform: scaleY(1);
+  }
+}

@@ -1,0 +1,651 @@
+$background: #21223a;
+$sun: #fffaa9;
+$sunEyes: #ffcfa9;
+$sunShadow: #f0cd9c;
+$sunEyeDuration: 2.3s;
+$land: #62e5aa;
+$water: #6fd4dd;
+$heart: rgb(245, 80, 32);
+$closed: darken($water, 35%);
+$tear: #54acb7;
+$moon: #e3e7ea;
+$moonEyes: darken($moon, 45%);
+$crater: darken($moon, 8%);
+$boxShadow: darken($water, 10%);
+
+$skyRadius: 1000px;
+$star1ScrollDuration: 100s;
+$star2ScrollDuration: 125s;
+$star3ScrollDuration: 175s;
+$starStartOffset: 900px;
+$star1Size: 1px;
+$star2Size: 2px;
+$star3Size: 3px;
+$star1Count: 400;
+$star2Count: 250;
+$star3Count: 20;
+
+body {
+  background: $background;
+}
+
+@mixin planet($radius, $color) {
+  width: $radius;
+  height: $radius;
+  background: $color;
+  border-radius: 100%;
+}
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.sun {
+  @include planet(150px, $sun);
+  box-shadow: 0 0 60px $sunEyes, 0 0 100px #b9a018; //inset -10px -5px 0px 0px $sunShadow;
+  position: relative;
+  left: 250px;
+  .left-eye {
+    position: relative;
+    border-top-right-radius: 90px;
+    border-top-left-radius: 90px;
+    background: $sunEyes;
+    width: 25px;
+    height: 12.5px;
+    transform: scale(1.5);
+    top: 60px;
+    left: 30px;
+    animation: sun-lefteye $sunEyeDuration ease-in-out infinite;
+    &::after {
+      content: "";
+      position: absolute;
+      @extend .left-eye;
+      background: $sun;
+      left: 0px;
+      top: 3px;
+      transform: scale(0.9);
+      animation: sun-eye-smol $sunEyeDuration ease-in-out infinite;
+    }
+  }
+
+  .right-eye {
+    position: absolute;
+    border-top-right-radius: 90px;
+    border-top-left-radius: 90px;
+    background: $sunEyes;
+    width: 25px;
+    height: 12.5px;
+    transform: scale(1.5);
+    top: 60px;
+    left: 90px;
+    animation: sun-righteye $sunEyeDuration ease-in-out infinite;
+    &::after {
+      content: "";
+      position: absolute;
+      @extend .right-eye;
+      background: $sun;
+      left: 0px;
+      top: 3px;
+      transform: scale(0.9);
+      animation: sun-eye-smol $sunEyeDuration ease-in-out infinite;
+    }
+  }
+}
+
+.left-eyelash,
+.right-eyelash {
+  position: relative;
+  width: 2.5px;
+  height: 8px;
+  background: $sunEyes;
+  border-radius: 200px;
+}
+.left-eyelash {
+  top: 2px;
+  transform: rotate(-45deg);
+  &::after {
+    content: "";
+    @extend .left-eyelash;
+    position: absolute;
+    top: -1px;
+    left: 3px;
+    transform: rotate(5deg);
+  }
+}
+.right-eyelash {
+  top: -1px;
+  left: 21px;
+  transform: rotate(45deg);
+  &::after {
+    content: "";
+    @extend .left-eyelash;
+    position: absolute;
+    top: 1px;
+    left: 3px;
+  }
+}
+.rays {
+  position: absolute;
+  transform-origin: center;
+  margin: auto;
+  width: 150px;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  animation: spin 120s linear infinite;
+}
+.beam {
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0),
+    $sunEyes 40%,
+    $sunEyes
+  );
+  margin-left: 10px;
+  border-radius: 50% 50% 0 0;
+  position: absolute;
+  opacity: 0.03;
+  height: 110px;
+  &:nth-child(1) {
+    width: 40px;
+    transform: rotate(180deg);
+    top: -90px;
+    left: 42px;
+  }
+  &:nth-child(2) {
+    width: 30px;
+    transform: rotate(210deg);
+    right: -5px;
+    top: -80px;
+  }
+  &:nth-child(3) {
+    width: 50px;
+    transform: rotate(255deg);
+    top: -20px;
+    right: -65px;
+  }
+  &:nth-child(4) {
+    width: 24px;
+    transform: rotate(300deg);
+    top: 60px;
+    left: 150px;
+  }
+  &:nth-child(5) {
+    width: 40px;
+    top: 135px;
+    left: 40px;
+  }
+  &:nth-child(6) {
+    width: 30px;
+    transform: rotate(-35deg);
+    top: 115px;
+    right: -12px;
+  }
+  &:nth-child(7) {
+    width: 45px;
+    transform: rotate(45deg);
+    top: 100px;
+    left: -45px;
+  }
+  &:nth-child(8) {
+    width: 20px;
+    transform: rotate(75deg);
+    top: 40px;
+    left: -70px;
+  }
+  &:nth-child(9) {
+    width: 50px;
+    transform: rotate(-250deg);
+    top: -30px;
+    left: -70px;
+  }
+  &:nth-child(10) {
+    width: 20px;
+    transform: rotate(145deg);
+    top: -80px;
+    left: -15px;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes sun-lefteye {
+  50% {
+    left: 40px;
+  }
+}
+@keyframes sun-eye-smol {
+  50% {
+    left: 0px;
+  }
+}
+@keyframes sun-righteye {
+  50% {
+    left: 100px;
+  }
+}
+
+.moon {
+  @include planet(80px, $moon);
+  position: absolute;
+  top: 110px;
+  right: 130px;
+  transform-origin: 200px center;
+  overflow: hidden;
+  transform: rotate(-20deg);
+  animation: moonOrbit 5s infinite 0.3s;
+  &::after {
+    content: "";
+    @include planet(80px, transparent);
+    position: absolute;
+    box-shadow: inset 15px -3px 0px $moonEyes;
+    z-index: 3;
+    opacity: 0.2;
+  }
+  .craters {
+    position: absolute;
+    animation: moonScroll 5s linear infinite 0.3s;
+    &:nth-child(1) {
+      @include planet(40px, $crater);
+    }
+    &:nth-child(2) {
+      @include planet(10px, $crater);
+      left: 40px;
+      top: 35px;
+    }
+    &:nth-child(3) {
+      @include planet(40px, $crater);
+      left: 60px;
+    }
+    &:nth-child(4) {
+      @include planet(20px, $crater);
+      top: 45px;
+    }
+    &:nth-child(5) {
+      @include planet(30px, $crater);
+      top: 55px;
+      left: 30px;
+    }
+  }
+  .eyes {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 35px;
+    transform: translateX(-50);
+    &::before,
+    &::after {
+      display: block;
+      content: "";
+      position: relative;
+      width: 20px;
+      height: 5px;
+      right: 25%;
+      border-radius: 200px;
+      background: $moonEyes;
+      margin: 0 3px;
+      animation: blink 3.5s infinite;
+    }
+    &::before {
+      transform: rotate(30deg);
+    }
+    &::after {
+      transform: rotate(-30deg);
+    }
+  }
+}
+@keyframes moonOrbit {
+  20%,
+  25% {
+    transform: rotate(50deg);
+  }
+  55%,
+  60% {
+    transform: rotate(-20deg);
+  }
+}
+@keyframes blink {
+  0% {
+    top: 0px;
+    height: 5px;
+  }
+  18% {
+    top: 0px;
+    height: 5px;
+  }
+  20% {
+    top: 3px;
+    height: 2px;
+  }
+  25% {
+    top: 0px;
+    height: 5px;
+  }
+  38% {
+    top: 0px;
+    height: 5px;
+  }
+  40% {
+    top: 3px;
+    height: 2px;
+  }
+  45% {
+    top: 0px;
+    height: 5px;
+  }
+  80% {
+    top: 0px;
+    height: 5px;
+  }
+  100% {
+    top: 0px;
+    height: 5px;
+  }
+}
+
+.earth {
+  position: absolute;
+  display: block;
+  right: 300px;
+  top: 100px;
+  @include planet(120px, $water);
+  transform: rotate(-20deg);
+  transform-origin: 400px center;
+  overflow: hidden;
+  animation: earthOrbit 5s infinite;
+  &::after {
+    content: "";
+    @include planet(120px, transparent);
+    position: absolute;
+    box-shadow: inset 10px 1px 0px $closed;
+    z-index: 3;
+    opacity: 0.2;
+  }
+}
+@keyframes earthOrbit {
+  20%,
+  25% {
+    transform: rotate(50deg);
+  }
+
+  55%,
+  60% {
+    transform: rotate(-20deg);
+  }
+}
+
+.countries {
+  position: absolute;
+  z-index: 1;
+  animation: scroll 5s linear alternate infinite;
+  &:nth-child(1) {
+    // NA
+    @include planet(40px, $land);
+    left: 5px;
+    top: 20px;
+  }
+  &:nth-child(2) {
+    // SA
+    @include planet(50px, $land);
+    left: 25px;
+    top: 45px;
+  }
+  &:nth-child(3) {
+    // EU
+    @include planet(35px, $land);
+    left: 60px;
+    top: 20px;
+  }
+  &:nth-child(4) {
+    // AFRICA
+    @include planet(55px, $land);
+    left: 90px;
+    top: 50px;
+  }
+  &:nth-child(5) {
+    // ASIA
+    @include planet(60px, $land);
+    left: 75px;
+  }
+  &:nth-child(6) {
+    //antarctica
+    @include planet(50px, $land);
+    top: 110px;
+    left: 35px;
+  }
+  &:nth-child(7) {
+    @include planet(30px, $land);
+    top: 20px;
+    left: -50px;
+  }
+}
+.eyes {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  z-index: 3;
+  top: 15px;
+  left: 25%;
+  .opened::before,
+  .opened::after {
+    display: block;
+    content: "\2665";
+    color: $heart;
+    font-size: 40px;
+    margin: 0 8px;
+    //opacity: 0;
+    animation: openBlink 5s linear infinite;
+  }
+  .closed::before,
+  .closed::after {
+    display: block;
+    content: "";
+    background: transparent;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    box-shadow: 5px 5px 0 0 $closed;
+    margin: 8px 8px;
+    transform: rotate(45deg);
+    opacity: 0;
+    animation: closedEyes 5s linear infinite;
+  }
+}
+.tear {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 0 50% 50% 50%;
+  background: $tear;
+  top: 65px;
+  z-index: 3;
+  left: 35px;
+  opacity: 0;
+  transform: rotate(60deg);
+  animation: crying 5s infinite 3s;
+}
+@keyframes crying {
+  from {
+    opacity: 1;
+    transform: translateY(0px) rotate(60deg);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+}
+@keyframes openBlink {
+  0% {
+    transform: scaleY(1);
+  }
+  18% {
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(0);
+  }
+  25% {
+    transform: scaleY(1);
+  }
+  38% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(0);
+  }
+  45% {
+    transform: scaleY(1);
+  }
+  48% {
+    transform: scaleY(0), scaleX(0);
+    opacity: 1;
+  }
+  50% {
+    margin-top: 8px;
+    opacity: 0;
+  }
+  72% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes closedEyes {
+  45% {
+    opacity: 0;
+    margin-top: 8px;
+  }
+  49% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 15px;
+  }
+}
+.shadow {
+  @include planet(100px, $background);
+  z-index: 2;
+  position: absolute;
+  opacity: 0.2;
+  right: 270px;
+  top: 210px;
+  transform-origin: 650px center;
+  animation: shadowOrbit 5s infinite 0.3s;
+}
+@keyframes shadowOrbit {
+  20%,
+  25% {
+    transform: rotate(35deg);
+  }
+  55%,
+  60% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes scroll {
+  50% {
+    transform: translateX(-90px);
+  }
+}
+
+@keyframes moonScroll {
+  50% {
+    transform: translateX(-40px);
+  }
+}
+
+.excited {
+  position: absolute;
+  font-weight: bold;
+  font-family: Arial;
+  z-index: -1;
+  color: white;
+  top: 200px;
+  right: 400px;
+  font-size: 0px;
+  transform: rotate(-30deg);
+  animation: excited 5s infinite 4.5s;
+}
+
+@keyframes excited {
+  0% {
+    font-size: 0px;
+  }
+  2% {
+    font-size: 25px;
+  }
+  10% {
+    opacity: 1;
+    font-size: 25px;
+  }
+  20% {
+    opacity: 0;
+    font-size: 25px;
+  }
+  100% {
+    opacity: 0;
+    font-size: 0px;
+  }
+}
+
+@function create-stars($n, $w, $h) {
+  $stars: "#{random($w)}vh #{random($h)}vh #FFF";
+  @for $i from 2 through $n {
+    $stars: "#{$stars} , #{random($w)}vh #{random($h)}vh #FFF";
+  }
+  @return unquote($stars);
+}
+
+@mixin star-template($nStars, $starSize, $scrollSpeed) {
+  z-index: -1;
+  width: $starSize;
+  height: $starSize;
+  border-radius: 50%;
+  box-shadow: create-stars($nStars, $skyRadius, $skyRadius - 100);
+  animation: star-animation $scrollSpeed linear infinite;
+  &:after {
+    content: " ";
+    top: -$starStartOffset;
+    width: $starSize;
+    height: $starSize;
+    border-radius: 50%;
+    position: absolute;
+    box-shadow: create-stars($nStars, $skyRadius*0.5, $skyRadius*0.8);
+  }
+}
+
+// star animations
+@keyframes star-animation {
+  0% {
+    transform: rotate(-20deg) translateX(-$skyRadius);
+  }
+  100% {
+    transform: rotate(-20deg) translateX($skyRadius);
+  }
+}
+
+.stars1 {
+  @include star-template($star1Count, $star1Size, $star1ScrollDuration);
+}
+.stars2 {
+  @include star-template($star2Count, $star2Size, $star2ScrollDuration);
+}
+.stars3 {
+  @include star-template($star3Count, $star3Size, $star3ScrollDuration);
+}

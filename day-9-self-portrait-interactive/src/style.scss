@@ -1,0 +1,308 @@
+$background: #020916;
+$container: #5ab3b5; //#00ced1;
+$shirt: #b51231;
+$skin: #c74b16;
+
+body {
+  background: $background;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+
+.container {
+  background: $container;
+  overflow: hidden;
+  width: 300px;
+  height: 300px;
+  border-radius: 100%;
+  transition: all 0.5s ease;
+  &:hover {
+    background: pink;
+    .cheeks {
+      &::before,
+      &::after {
+        background: darken($shirt, 10%);
+      }
+    }
+    .heart {
+      background: pink;
+      &:before,
+      &:after {
+        background: pink;
+      }
+    }
+    .shirt-button {
+      background: $shirt;
+    }
+    .heart-button {
+      z-index: 1;
+      color: white;
+      animation: pulse 1s 0.5s ease-out infinite;
+    }
+  }
+}
+
+.heart {
+  width: 300px;
+  height: 300px;
+  background: $background;
+  position: absolute;
+  top: 30px;
+  z-index: -1;
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+  &:before,
+  &:after {
+    content: "";
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    border-radius: 100%;
+    background: $background;
+    transition: all 0.5s ease;
+  }
+  &:before {
+    top: -150px;
+    left: 0;
+  }
+  &:after {
+    left: -150px;
+    top: 0;
+  }
+}
+.avatar-body {
+  width: 60px;
+  height: 30px;
+  background: $shirt;
+  position: absolute;
+  left: calc(50% - 30px);
+  top: 75%;
+  z-index: 2;
+  &:after {
+    content: "";
+    position: absolute;
+    border-bottom: 20px solid darken(white, 10%);
+    border-left: 20x solid transparent;
+    border-right: 15px solid transparent;
+    height: 0;
+    width: 22px;
+    right: calc(50% - 10px);
+    top: -20px;
+  }
+  &:before {
+    content: "";
+    position: absolute;
+    border-bottom: 20px solid darken(white, 20%);
+    border-left: 15px solid transparent;
+    border-right: 0px solid transparent;
+    height: 0;
+    width: 25px;
+    right: 2px;
+    top: -20px;
+  }
+}
+.shirt-button {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 100%;
+  left: calc(50% - 5px);
+  top: 10px;
+}
+.heart-button {
+  position: absolute;
+  color: $shirt;
+  font-size: 20px;
+  top: -15px;
+  left: 35%;
+  z-index: -1;
+}
+.avatar-head {
+  position: absolute;
+  z-index: 3;
+  width: 90px;
+  height: 120px;
+  background: $skin;
+  border-radius: 40px;
+  left: calc(50% - 45px);
+  top: 70px;
+}
+.avatar-neck {
+  position: absolute;
+  width: 40px;
+  height: 50px;
+  background: $skin;
+  left: calc(50% - 20px);
+  top: 60%;
+  box-shadow: inset 0px 16px 0px 0px darken($skin, 10%);
+}
+.avatar-hair {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  background: $background;
+  border-radius: 100%;
+  left: calc(50% - 65px);
+  top: 12%;
+  box-shadow: inset 10px -1px lighten($background, 10%);
+  &:after {
+    content: "";
+    position: absolute;
+    width: 90px;
+    height: 50px;
+    background: $background;
+    border-radius: 0px 200px 0px 200px;
+    z-index: 4;
+    left: 40px;
+    top: 20px;
+    transform: rotate(10deg);
+  }
+}
+.avatar-ponytail {
+  width: 90px;
+  height: 120px;
+  position: absolute;
+  background: $background;
+  left: 25%;
+  top: 40%;
+  border-radius: 200px;
+  &:after {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 70px;
+    background: $background;
+    border-radius: 0 0 300px 300px;
+    top: 60%;
+    right: -5%;
+  }
+}
+.avatar-face {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  left: calc(50% - 35px);
+  top: calc(50% - 50px);
+  z-index: 5;
+  .eyes {
+    dispaly: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 12px;
+    left: -7px;
+    &::before,
+    &::after {
+      display: inline-block;
+      content: "";
+      width: 15px;
+      height: 40px;
+      background: $background;
+      margin: 0 14px;
+      border-radius: 200px;
+      animation: blink 3s ease-in-out infinite;
+    }
+  }
+
+  .glasses {
+    position: relative;
+    width: 5px;
+    height: 2px;
+    background: #f89714;
+    left: 6.5%;
+    top: 25px;
+    .left {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: transparent;
+      border-radius: 100%;
+      border: 2px solid #f89714;
+      left: -52px;
+      top: -22px;
+      overflow: hidden;
+      z-index: 2;
+    }
+    .right {
+      @extend .left;
+      left: 4px;
+    }
+  }
+}
+.shine {
+  position: absolute;
+  &:before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 100px;
+    background: white;
+    opacity: 0.3;
+    transform: rotate(30deg);
+    top: -25px;
+    left: 5px;
+  }
+  &:after {
+    @extend .shine:before;
+    width: 5px;
+    left: 30px;
+  }
+}
+.cheeks {
+  dispaly: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 55px;
+  left: -25px;
+  &::before,
+  &::after {
+    display: inline-block;
+    content: "";
+    width: 20px;
+    height: 20px;
+    background: $skin;
+    margin: 0 20px;
+    opacity: 0.5;
+    transition: all 1s ease;
+    border-radius: 200px;
+  }
+}
+
+@keyframes blink {
+  0% {
+    transform: scaleY(1);
+  }
+  18% {
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(0);
+  }
+  25% {
+    transform: scaleY(1);
+  }
+  38% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(0);
+  }
+  45% {
+    transform: scaleY(1);
+  }
+  80% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  } 30% {
+    transform: scale(1.5);
+  } 100% {
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,314 @@
+$bg:  darken(#122139, 8%);//#fffafa;
+$case: #122139;
+$casebase: #a52a2a;
+$pink1: #d52d58;
+$pink2: #9e183a;
+$pink3: #b81b43;
+$pink4: #c9204b;
+$green1: #338f37;
+$green2: darken(#066406, 5%);
+
+@mixin rotatePetal($i, $angle) {
+  @if ($i % 2 == 1) {
+    $angle: $angle * -1;
+  }
+  transform: rotate($angle + deg);
+}
+@function randomNum($min, $max) {
+  $rand: random();
+  $randomNum: $min + floor($rand * (($max - $min) + 1));
+
+  @return $randomNum;
+}
+body {
+  height: 100%;
+  width: 100%;
+  background: $bg;
+  overflow: hidden;
+}
+
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.glass {
+  height: 350px;
+  width: 200px;
+  background: $case;
+  border-radius: 300px 300px 0px 0px;
+  &:before {
+    content: "";
+    height: 10px;
+    width: 10px;
+    transform-origin: center;
+    border: 10px solid $case;
+    border-radius: 100%;
+    position: absolute;
+    left: 87px;
+    top: -25px;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    height: 15px;
+    width: 250px;
+    background: $casebase;
+    top: 100%;
+    left: -13%;
+  }
+}
+.shine {
+  width: 12px;
+  height: 140px;
+  background: white;
+  opacity: 0.2;
+  position: absolute;
+  left: 85%;
+  top: 80px;
+  border-radius: 100px;
+  z-index: 10;
+  &:before {
+    content: "";
+    width: 12px;
+    height: 20px;
+    position: absolute;
+    background: white;
+    top: 160px;
+    border-radius: 100px;
+  }
+}
+.petals {
+  & > div {
+    position: absolute;
+    background: $pink1;
+    width: 45px;
+    height: 80px;
+    top: 55px;
+    transition: all 0.5s ease-out;
+  }
+  & > div:nth-child(1) {
+    border-radius: 15px;
+    box-shadow:  0px 0px 30px rgba(245, 148, 184, 1);
+    left: 80px;
+    top: 60px;
+    background: $pink1;
+  }
+  & > div:nth-child(2),
+  & > div:nth-child(4),
+  & > div:nth-child(6) {
+    background: $pink3;
+    left: 60px;
+    border-radius: 0px 30px 0px 30px;
+    transform-origin: bottom right;
+  }
+  & > div:nth-child(3),
+  & > div:nth-child(5),
+  & > div:nth-child(7) {
+    background: $pink3;
+    left: 100px;
+    border-radius: 30px 0px 30px 0px;
+    transform-origin: bottom left;
+  }
+  @for $i from 2 to 8 {
+    $background: "";
+    $top: "";
+    $h: "";
+    $box: "";
+    $angle: 30deg;
+    @if ($i == 2 or $i == 3) {
+      $background: lighten($pink2, 3%);
+      $top: 75px;
+      $h: 70px;
+      //@if ($i == 3) {
+      $box:  0px 0px 50px rgba(245, 148, 184, .5);
+      //}
+    }
+    @if ($i == 4 or $i == 5) {
+      $background: $pink3;
+      $top: 70px;
+      $h: 75px;
+      $box:  0px 0px 50px rgba(245, 148, 184, .5);
+    }
+    @if ($i == 6 or $i == 7) {
+      $background: $pink4;
+      $top: 65px;
+      $h: 70px;
+      $box:  0px 0px 50px rgba(245, 148, 184, .3);
+    }
+    & > div:nth-child(#{$i}) {
+      z-index: 7-$i;
+      background: $background;
+      top: $top;
+      height: $h;
+      box-shadow: $box;
+      @if ($i == 2) {
+        animation: bloom2 3s ease-in-out;
+      } @else {
+      animation: bloom+$i 3s ease-in-out, glowing 2.5s ease-in-out infinite;
+      }
+      animation-fill-mode: forwards;
+    }
+  }
+}
+.deadPetals {
+   & > div {
+    position: absolute;
+    background: $pink1;
+    width: 20px;
+    height: 15px;
+    top: 120px;
+    border-radius: 0px 30px 0px 30px;
+    box-shadow: 0px 0px 30px rgba(245, 148, 184, .5);
+    transition: all 0.5s ease-out;
+  }
+  @for $i from 1 to 5 {
+    & > div:nth-child(#{$i}) {
+     left: randomNum(60, 120)+px;
+     transform: rotate(-30deg);
+     animation: falling 20s $i*4s ease-in-out infinite;
+    }
+  }
+}
+.leaves {
+  & > div:nth-last-child(1) {
+    position: absolute;
+    width: 55px;
+    height: 30px;
+    background: $green1;
+    top: 120px;
+    left: 75px;
+    border-radius: 100px;
+
+  }
+  & > div:nth-child(1) {
+    position: absolute;
+    width: 6px;
+    height: 210px;
+    background: $green2;
+    top: 95px;
+    left: 100px;
+    border-radius: 0 0 100px 100px;
+  }
+  & > div:nth-child(2) {
+    position: absolute;
+    width: 30px;
+    height: 50px;
+    top: 53px;
+    border-radius: 5px 40px 20px 40px;
+    background: $green2;
+    transform-origin: bottom;
+    transform: rotate(-30deg);
+    top: 180px;
+    left: 80px;
+    box-shadow: inset 5px 5px lighten($green2, 5%);
+  }
+  & > div:nth-child(3) {
+    position: absolute;
+    width: 30px;
+    height: 50px; 
+    top: 53px;
+    border-radius: 40px 5px 40px 20px;
+    background: $green2;
+    transform-origin: bottom;
+    transform: rotate(30deg);
+    top: 150px;
+    left: 95px;
+    box-shadow: inset -5px 5px lighten($green2, 5%);
+  }
+}
+.thorns {
+  & > div {
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 140px;
+  }
+  & > div:nth-child(odd) {
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid $green2;
+    left: 105px;
+  }
+  & > div:nth-child(even) {
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 5px solid $green2;
+    left: 95px;
+  }
+  & > div:nth-child(1) {
+    top: 200px;
+  }
+  & > div:nth-child(2) {
+    top: 170px;
+  }
+  & > div:nth-child(4) {
+    top: 230px;
+  }
+}
+
+@keyframes bloom2 {
+  50% {
+    transform: rotate(-90deg);
+    top: 200px;
+    left: 100px;
+  }
+  100% {
+    transform: rotate(-60deg);
+    top: 252px;
+    left: 50px;
+    background: darken($pink4, 20%);
+    box-shadow: 0px 0px 0px rgba(245, 148, 184, 0);
+  }
+}
+
+@keyframes bloom3 {
+  100% {
+    transform: rotate(45deg);
+  }
+}
+
+@keyframes bloom4 {
+  100% {
+    transform: rotate(-20deg);
+  }
+}
+
+@keyframes bloom5 {
+  100% {
+    transform: rotate(20deg);
+  }
+}
+
+@keyframes bloom6 {
+  100% {
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes bloom7 {
+  100% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes glowing {
+  50% {
+    background: lighten($pink1, 2%);
+	  box-shadow: 0px 0px 60px rgba(245, 148, 184, 1);
+	}
+}
+
+@keyframes falling {
+  20% {
+    top: 335px;
+    background: darken($pink4, 10%);
+    box-shadow: 0px 0px 0px rgba(245, 148, 184, 0);
+  }
+  100% {
+    top: 335px;
+    opacity: 0;
+  }
+}

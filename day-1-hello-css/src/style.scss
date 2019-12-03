@@ -1,0 +1,162 @@
+@import "compass/css3";
+@import url("https://fonts.googleapis.com/css?family=Pacifico");
+
+// gradient source: https://uigradients.com/#IntuitivePurple
+$gradients: linear-gradient(to top, #da22ff, #9733ee);
+$background: #da22ff;
+$shadow: #e3e3e3;
+
+// hello world gradient
+@mixin text-gradient() {
+  // creates an image mask using bg gradients
+  background-image: -webkit-linear-gradient(to top, #da22ff, #9733ee);
+  background-image: -moz-linear-gradient(to top, #da22ff, #9733ee);
+  background-image: -ms-linear-gradient(to top, #da22ff, #9733ee);
+  background-image: -o-linear-gradient(to top, #da22ff, #9733ee);
+  background-image: linear-gradient(to top, #da22ff, #9733ee);
+  // prepares the text for masking 
+  color: transparent;
+  // creates clipping mask with text
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+// hand rotations
+@mixin rotate-hand($angle) {
+  -webkit-transform: rotate($angle);
+  -moz-transform: rotate($angle);
+  -ms-transform: rotate($angle);
+  transform: rotate($angle);
+}
+
+// origin updates for hand wave
+@mixin origin($origin_values) {
+  -webkit-transform-origin: $origin_values;
+  -moz-transform-origin: $origin_values;
+  -ms-transform-origin: $origin_values;
+  transform-origin: $origin_values;
+}
+// Set the background color to custom gradient
+body,
+html {
+  background: $gradients;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Style for hello world text
+.hello {
+  font-family: "Pacifico", cursive;
+  font-size: 70px;
+  @include text-gradient();
+  text-align: center;
+  opacity: 0;
+  filter: drop-shadow(2px 7px 0px $shadow);
+  @include animation(hello 2s forwards);
+  @include animation-delay(0.8s);
+}
+
+// Speech bubble style
+.speech_bubble {
+  width: 625px;
+  height: 220px;
+  background: #fff;
+  position: relative;
+  margin: auto; 
+  border: 10px solid #fff;
+  @include border-radius(200px);
+  @include animation(pop 2s ease-out);
+  filter: drop-shadow(4px 7px 0px $shadow);
+}
+
+// speech bubble opening animation
+@include keyframes(pop) {
+  0% {
+    width: 100px;
+  }
+  40% {
+    width: 1000px;
+  }
+  80% {
+    width: 600px;
+  }
+  // 90% {
+  //   width: 900px;
+  // }
+}
+// hello world fade in
+@include keyframes(hello) {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+// completed speech bubble
+.speech_bubble:after {
+  width: 0;
+  height: 0;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+  border-top: 50px solid #fff;
+  content: "";
+  top: 210px;
+  position: absolute;
+  left: 100px;
+  right: 0;
+  margin: auto;
+  @include animation(move 0.8s ease);
+}
+// speech bubble before transition
+.speech_bubble:before {
+  @extend .speech_bubble:after;
+  top: 220px;
+  border-top: 55px solid #fff;
+  border-left: 44px solid transparent;
+  border-right: 44px solid transparent;
+}
+// moves the speech bubble tooltip in plain sight
+@include keyframes(move) {
+  0% {
+    top: 50px;
+    left: -10px;
+  }
+  50% {
+    left: 50px;
+  }
+  100% {
+    left: 100px;
+  }
+}
+// hand movements
+.em-hand {
+  font-size: 48px;
+  text-align: center;
+  margin: 0.5em 0.5em 1em;
+  @include animation(wave 0.3s alternate infinite);
+  @include origin(50% 100%);
+}
+// handwave animation
+@include keyframes(wave) {
+  0% {
+    // rotate hand down
+    @include rotate-hand(-30deg);
+  }
+  100% {
+    // rotate back up
+    @include rotate-hand(10deg);
+  }
+}

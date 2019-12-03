@@ -1,0 +1,639 @@
+$white: #fffaf0;
+
+$sky-fallback: #654ea3; 
+$sky-webkit: -webkit-linear-gradient(to bottom, #fcf3d8 30%, #eaafc8, #654ea3); 
+$sky: linear-gradient(to top, #fcf3d8 30%, #eaafc8, #654ea3);
+$scene-size: 450px;
+$num-mountains: 8;
+$hill: #82d9a2;
+
+$head-radius-top: 50% 25px;
+$head-radius-bottom: 18px;
+$bulbasaur-body: darken(#56ffe9, 20%);
+$bulb: #00d6ba;
+$bulb-dark: darken($bulb, 10%);
+$pika-body: #fff069;
+$pika-brown: #9c5200;
+
+$moon-size: 75px;
+
+$flight: 15s;
+$sparkle-colors: #fffce6, #ffeefc, #f3ffe4, #e9fbff;
+
+@function randomNum($min, $max) {
+  $rand: random();
+  @return ($min + floor($rand * (($max - $min) + 1)));
+}
+
+@mixin head-styles($color) {
+  position: absolute;
+  width: 60px; 
+	height: 45px;
+  background-color: $color;
+  border-top-left-radius: $head-radius-top;
+  border-top-right-radius: $head-radius-top;
+  border-bottom-left-radius: $head-radius-bottom;
+  border-bottom-right-radius: $head-radius-bottom;
+}
+
+@mixin gradient-colors($first, $second, $direction) {
+  background: $second;  
+  background: -webkit-linear-gradient($direction, $first, $second);  
+  background: linear-gradient($direction, $first, $second)
+}
+
+@mixin hill-styles($size, $top, $left) {
+  $half: $size/2;
+  $quarter:  $size/4;
+  width: $size;
+  height: $half;
+  top: $top;
+  left: $left;
+  border-top-left-radius: $half $quarter;
+  border-top-right-radius: $half $quarter;
+  border-bottom-left-radius: $half $quarter;
+  border-bottom-right-radius: $half $quarter;
+  box-shadow: inset 20px 30px 50px darken(#4ca2cd, 15%);
+}
+
+@mixin sparkleColor($color) {
+  background-color: $color;
+  box-shadow: 0px 0px 10px $color;
+}
+
+@mixin flight ($aniName, $x, $y) {
+  @keyframes #{$aniName} {
+    95% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate($x, $y) scale(0);
+      opacity: 0;
+    }
+  }
+}
+
+@mixin animateSparkles($delay, $start, $end, $ani, $x, $y, $inc, $delta) {
+  @include flight($ani, $x, $y);
+  @for $i from $start through $end {
+    &:nth-child(#{$i}) {
+      animation: #{$ani} $flight+$inc $delay infinite;
+      $delay: $delay + $delta;
+    }
+  }
+}
+
+body {
+  background-color: $white;
+}
+ul {
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+
+.container {
+  background-image: $sky;
+  background-image: $sky-webkit;
+  background-color: $sky-fallback;
+  height: $scene-size;
+  width: $scene-size;
+  border-radius: 100%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  overflow: hidden;
+}
+
+.mountain-range {
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  top: 50%;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+
+  .mountain {
+    @for $i from 1 through $num-mountains {
+      &:nth-child(#{$i}) {
+        $mountain-size: randomNum(150px, 200px);
+        $margin-top: randomNum(20px, 50px);
+        width: 0;
+        height: 0;
+        margin-top: $margin-top;
+        margin-left: -60%;
+        border-left: $mountain-size solid transparent;
+        border-right: $mountain-size solid transparent;
+        border-bottom: $mountain-size/2 solid darken(rgb(168, 212, 255), 10%);
+      }
+    }
+  }
+}
+.forest {
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  top: 65%;
+  .hill {
+    position: absolute;
+    background-color: $hill;
+    &:nth-child(1) {
+      @include hill-styles(600px, -10px, -150px);
+    }
+    &:nth-child(2) {
+      @include hill-styles(500px, -5px, 100px);
+    }
+    &:nth-child(3) {
+      @include hill-styles(500px, 17px, -180px);
+    }
+  }
+}
+
+.grass {
+  position: absolute;
+  width: 600px;
+  height: 300px;
+  border-radius: 300px / 150px;
+  top: 75%;
+  left: -100px;
+  background: $hill;
+  box-shadow: inset 20px 30px 60px darken(#4ca2cd, 15%)
+}
+
+.pokemon {
+  position: absolute;
+  width: 300px;
+  height: 110px;
+  left: calc(53% - 150px);
+}
+
+.poke {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+}
+
+#bulbasaur {
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background: rgba(#000, .2);
+    border-radius: 100%;
+    top: 50px;
+    left: 15px;
+    transform: rotate(-15deg);
+  }
+  .head {
+    @include head-styles($bulbasaur-body);
+    left: 55px;
+  }
+  .ear {
+    position: absolute;
+    height: 20px;
+    width: 23px;
+    background-color: $bulbasaur-body;
+    border-top-left-radius: 50px 90px;
+    border-top-right-radius: 50px 90px;
+    transform-origin: center bottom;
+
+    &:nth-child(1) {
+      transform: rotate(-45deg);
+      left: 52px;
+      top: -5px;
+      animation: rotateLeftBulbEar 2s alternate infinite;
+    }
+    &:nth-child(2) {
+      transform: rotate(45deg);
+      left: 87px;
+      top: -5px;
+      animation: rotateRightBulbEar 2s alternate infinite;
+    }
+  }
+
+  .bulba-body {
+    position: relative;
+    width: 65px;
+    height: 55px;
+    background-color: $bulbasaur-body;
+    left: 42px;
+    top: 20px;
+    border-radius: 100%;
+    box-shadow: inset 10px -10px darken($bulbasaur-body, 4%);
+    animation: bodyBreathe 2s alternate infinite;
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+    }
+    &:before {
+      width: 10px;
+      height: 13px;
+      top: 33px;
+      left: 8px;
+      background-color: darken($bulbasaur-body, 8%);
+      border-bottom-left-radius: 100%;
+      border-bottom-right-radius: 30%;
+      border-top-right-radius: 30%;
+      border-top-left-radius: 50%;
+      transform: rotate(-45deg);
+    }
+    &:after {
+      width: 8px;
+      height: 8px;
+      top: 30px;
+      left: 53px;
+      background-color: darken($bulbasaur-body, 4%);
+      border-bottom-left-radius: 100%;
+      border-bottom-right-radius: 30%;
+      border-top-right-radius: 30%;
+      border-top-left-radius: 50%;
+      transform: rotate(65deg);
+    }
+  }
+
+  .leg {
+    position: absolute;
+    width: 20px;
+    height: 40px;
+    background-color: $bulbasaur-body;
+    border-bottom-left-radius: 35px 110%;
+    border-bottom-right-radius: 35px 110%;
+    box-shadow: inset 10px -20px darken($bulbasaur-body, 5%);
+    left: 90px;
+    top: 30px;
+  }
+  .bulbs {
+    position: absolute;
+    top: -1px;
+    width: 55px;
+    height: 55px;
+    left: 50px;
+    transform-origin: center;
+    transform: rotate(45deg);
+    z-index: 3;
+    animation: bulbaBreathe 2s alternate infinite;
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      height: 45px;
+      width: 45px;
+      border-radius: 0 50% 50% 50%;
+    }
+    &:before {
+      transform: translate(-5px, 10px) rotate(7deg);
+      background-color: darken($bulb-dark, 10%);
+    }
+    &:after {
+      transform: translate(10px, -5px) rotate(-7deg);
+      background-color: darken($bulb-dark, 5%);
+    }
+  }
+
+  .bulb {
+    position: absolute;
+    top: 10px;
+    right: 2px;
+    left: 3px;
+    width: 90%;
+    height: 90%;
+    border-radius: 0 50% 100% 50%;
+    background-color: $bulb-dark;
+    z-index: 4;
+    box-shadow: inset 1px -5px darken($bulb-dark, 3%);
+  }
+}
+
+
+#pikachu {
+  left: -.1em;
+  &:before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 80px;
+    background: rgba(#000, .2);
+    border-radius: 100%;
+    top: 50px;
+    left: 115px;
+    transform: rotate(40deg);
+  }
+  .ear {
+    position: absolute;
+    height: 40px;
+    width: 18px;
+    background-color: $pika-body;
+    border-top-left-radius: 60px 150px;
+    border-top-right-radius: 60px 150px;
+    transform-origin: center bottom;
+    overflow: hidden;
+
+    &:nth-child(1) {
+      transform: rotate(-35deg);
+      left: 125px;
+      top: -35px;
+      animation: rotateLeftEar 1s alternate infinite;
+
+      &:after {
+        content: '';
+        position: absolute;
+        background-color: #444;
+        width: 150%;
+        height: 15px;
+        left: -8px;
+        transform: rotate(-30deg)
+      }
+    }
+    &:nth-child(2) {
+      transform: rotate(50deg);
+      left: 157px;
+      top: -30px;
+      animation: rotateRightEar 1s alternate infinite;
+
+      &:after {
+        content: '';
+        position: absolute;
+        background-color: #444;
+        width: 150%;
+        height: 15px;
+        left: 2px;
+        transform: rotate(30deg);
+      }
+    }
+  }
+  .hand {
+    position: absolute;
+    height: 38px;
+    width: 15px;
+    background-color: $pika-body;
+    border-top-left-radius: 60px 150px;
+    border-top-right-radius: 60px 150px;
+    transform-origin: center bottom;
+    left: 123px;
+    top: 5px;
+    z-index: 5;
+    transform: rotate(-40deg);
+    animation: pikaPat .7s alternate infinite;
+  }
+
+  .head {
+    @include head-styles($pika-body);
+
+    left: 120px;
+    width: 60px; 
+    height: 55px;
+    top: -12px;
+    // transform: rotate(10deg);
+  }
+
+  .pika-body {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    background-color: $pika-body;
+    left: 122px;
+    top: 20px;
+    border-radius: 22px;
+
+    &:before, 
+    &:after {
+      content: '';
+      position: absolute;
+      background-color: $pika-brown;
+      width: 70%;
+      height: 7px;
+      left: 13px;
+      border-radius: 100%;
+    }
+
+    &:before {
+      top: 15px;
+      z-index: 2;
+    }
+    &:after {
+      top: 30px;
+    }
+  }
+
+  .pika-tail {
+    position: absolute;
+    height: 25px;
+    width: 16px;
+    background: $pika-brown;
+    border-radius: 5px;
+    left: 150px;
+    top: 40px;
+    transform-origin: bottom center;
+    transform: rotate(55deg);
+    box-shadow: -2px 2px 1px rgba(#444, .2);
+    z-index: 2;
+    animation: rotateTail 2s alternate infinite;
+
+    &:before,
+    &:after {
+      content: '';
+      transform-origin: bottom center;
+      position: absolute;
+      background-color: $pika-body;
+    }
+
+    &:before {
+      height: 1.45rem;
+      width: 1.4rem;
+      top: -2rem;
+      left: 0.25rem;
+      transform: rotate(-90deg);
+      border: 1px solid $pika-brown;
+      border-bottom-right-radius: 5px;
+      z-index: 4;
+      border-top: 1px solid $pika-body;
+    }
+
+    &:after {
+      background: $pika-body;
+      height: 3rem;
+      width: 2rem;
+      top: -2.8rem;
+      left: -2.5rem;
+      border-radius: 5px 5px 0 5px;
+      border: 1px solid $pika-brown;
+
+    }
+  }
+}
+
+.moon {
+  position: absolute;
+  width: $moon-size;
+  height: $moon-size;
+  @include gradient-colors(#FFFFFF, #FFEFBA, 135deg);
+  border: 5px solid $white;
+  top: 10%;
+  left: calc(50% - 45px); 
+  padding: 0;
+  border-radius: 100%;
+
+  li {
+    position: absolute;
+    border-radius: 100%;
+    $dark: darken(#FFEFBA, 8%);
+    &:nth-child(1) {
+      @include gradient-colors(rgba($white, .1),$dark, 45deg);
+      width: 20px;
+      height: 20px;
+      left: 5px;
+      top: 30px;
+    }
+    &:nth-child(2) {
+      @include gradient-colors(rgba($white, .1), $dark, unquote('to left'));
+      width: 35px;
+      height: 35px;
+      left: 35px;
+      top: 35px;
+    }
+    &:nth-child(3) {
+      @include gradient-colors(rgba($white, .1), $dark, -120deg);
+      width: 25px;
+      height: 25px;
+      left: 25px;
+      top: 5px;
+    }
+  }
+}
+
+.sparkles {
+  position: absolute;
+  width: 120%;
+  height: 190px;
+  top: 30%;
+  left: -45px;
+  .sparkle {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    border-radius: 100%;
+    @for $i from 1 through 32 {
+      &:nth-child(#{$i}) {
+        $index: randomNum(1, 4);
+        @include sparkleColor(nth($sparkle-colors, $index));
+      }
+    }
+  }
+}
+
+.one {
+  left: 0;
+  top: 0;
+  @include animateSparkles(0s, 1, 4, flyOne, 270px, 75px, 0, 6.44)
+}
+
+.two {
+  right: 0;
+  @include animateSparkles(2.7s, 5, 8, flyTwo, -270px, 75px, 6, 5.3)
+}
+
+.three {
+  left: 0;
+  top: 100%;
+  @include animateSparkles(1.4s, 9, 12, flyThree, 270px, -75px, 2, 8.5)
+}
+.four {
+  right: 0;
+  top: 100%;
+  @include animateSparkles(5.8s, 13, 16, flyFour, -270px, -75px, 10, 4.6)
+}
+
+.five {
+  left: 0;
+  top: 50%;
+  @include animateSparkles(8.7s, 17, 20, flyFive, 270px, 0px, 20, 5.7)
+}
+
+.six {
+  right: 0;
+  top: 50%;
+  @include animateSparkles(10.6s, 21, 24, flySix, -270px, 0px, 8.5, 4.4)
+}
+
+.seven {
+  left: 0;
+  top: 25%;
+  @include animateSparkles(5s, 25, 28, flySeven, 270px, 37px, 14, 7.67)
+}
+
+.eight {
+  right: 0;
+  top: 25%;
+  @include animateSparkles(1.6s, 29, 32, flyEight, -270px, 37px, 13.5, 3.74)
+}
+
+@keyframes pikaPat {
+  from {
+    transform: rotate(-40deg);
+  }
+  to {
+    transform: rotate(-50deg);
+  }
+}
+@keyframes rotateTail {
+  from {
+    transform: rotate(55deg);
+  }
+  to {
+    transform: rotate(65deg);
+  }
+}
+@keyframes rotateLeftEar {
+  from {
+    transform: rotate(-35deg);
+  }
+  to {
+    transform: rotate(-40deg);
+  }
+}
+@keyframes rotateRightEar {
+  from {
+    transform: rotate(50deg);
+  } 
+  to {
+    transform: rotate(60deg);
+  }
+}
+@keyframes bulbaBreathe {
+  from {
+    transform: rotate(45deg) scale(1);
+  }
+  to {
+    transform: rotate(45deg) scale(1.01);
+  }
+}
+@keyframes bodyBreathe {
+  from {
+    transform: scale(1);
+  } 
+  to {
+    transform: scale(1.05);
+  }
+}
+@keyframes rotateLeftBulbEar {
+  from {
+    transform: rotate(-45deg);
+  }
+  to {
+    transform: rotate(-55deg);
+  }
+}
+@keyframes rotateRightBulbEar {
+  from {
+    transform: rotate(45deg);
+  }
+  to {
+    transform: rotate(55deg);
+  }
+}

@@ -1,0 +1,27 @@
+mixin makeItems(itemCount, trail=false)
+  -var i = 0
+  while i < itemCount
+    if trail 
+      li.trail
+         .sparkles
+    else 
+      li 
+    -i++
+      
+.container  
+  ul.stars
+    +makeItems(60)
+  .cloud
+  .cloud
+  .magic-mountain
+    .eyes 
+  ul.hills.back-hills
+     +makeItems(5)
+  ul.hills.mid-hills
+     +makeItems(7)
+  ul.hills.front-hills
+     +makeItems(10)
+  ul.spell-trail
+     +makeItems(10, true)
+  .kamek 
+     img(src="https://i.imgur.com/QNdo6Yk.png" alt="Kamek" title="Kamek")

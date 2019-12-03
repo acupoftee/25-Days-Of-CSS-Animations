@@ -1,0 +1,288 @@
+@import url("https://fonts.googleapis.com/css?family=Archivo+Black");
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #5ab3b5;
+  margin: 0;
+  padding: 0;
+  cursor: url("https://acupoftee.github.io/images/slice-of-pizza.png"), auto;
+}
+
+p {
+  font-family: "Archivo Black";
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 180px;
+  color: #a0d3d5;
+}
+
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.container .me {
+  transition: all 0.5s ease;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 80px;
+  height: 160px;
+}
+.container .me .head {
+  position: absolute;
+  width: 70px;
+  height: 90px;
+  top: 10px;
+  background: #b5612c;
+  border-radius: 100px;
+  left: 4px;
+  transition: all 0.5s ease;
+}
+.container .me .head .bangs, .container .me .head .bangs-upper {
+  position: absolute;
+  width: 94%;
+  height: 50px;
+  top: -12px;
+  transition: all 0.5s ease;
+}
+.container .me .head .bangs span, .container .me .head .bangs-upper span {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: black;
+  border-radius: 100%;
+}
+.container .me .head .bangs span:nth-child(2), .container .me .head .bangs-upper span:nth-child(2) {
+  left: 20px;
+}
+.container .me .head .bangs span:nth-child(3), .container .me .head .bangs-upper span:nth-child(3) {
+  left: 40px;
+}
+.container .me .head .bangs-upper {
+  margin-top: -12px;
+}
+.container .me .head.look-left {
+  width: 70px;
+  left: -10px;
+}
+.container .me .head.look-left .bangs, .container .me .head.look-left .bangs-upper {
+  width: 106%;
+  left: -7px;
+}
+.container .me .head.look-right {
+  width: 70px;
+  left: 15px;
+}
+.container .me .head.look-right .bangs, .container .me .head.look-right .bangs-upper {
+  width: 106%;
+  left: 5px;
+}
+.container .me .face {
+  transition: all 0.5s ease;
+  position: absolute;
+  top: 30px;
+}
+.container .me .face .eyes {
+  display: flex;
+  justify-content: space-between;
+}
+.container .me .face .eyes:before, .container .me .face .eyes:after {
+  content: "";
+  display: block;
+  position: relative;
+  transform-origin: center;
+  width: 9px;
+  height: 30px;
+  background: black;
+  border-radius: 200px;
+  left: 3px;
+  margin: -2px 12px;
+  animation: blink 4s infinite;
+  transition: all 0.5s ease;
+}
+.container .me .face .glasses {
+  position: relative;
+  width: 5px;
+  height: 2px;
+  background: #f89714;
+  left: 50%;
+  top: 15px;
+}
+.container .me .face .glasses .left, .container .me .face .glasses .right {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border-radius: 100%;
+  border: 2px solid #f89714;
+  left: -42px;
+  top: -22px;
+  overflow: hidden;
+  z-index: 2;
+}
+.container .me .face .glasses .right {
+  left: 4px;
+}
+.container .me .face.look-left {
+  left: -7px;
+}
+.container .me .face.look-right {
+  left: 5px;
+}
+.container .me .shine {
+  position: absolute;
+}
+.container .me .shine:before, .container .me .shine:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 100px;
+  background: white;
+  opacity: 0.3;
+  transform: rotate(30deg);
+  top: -30px;
+  left: 5px;
+}
+.container .me .shine:after {
+  width: 5px;
+  left: 30px;
+}
+.container .me .neck {
+  position: absolute;
+  width: 20px;
+  height: 60px;
+  background: #b5612c;
+  top: 60px;
+  left: 30px;
+  border-radius: 0px 0px 100px 100px;
+  overflow: hidden;
+}
+.container .me .neck:before {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: #8c4b22;
+  border-radius: 100%;
+  top: -12px;
+  left: -18px;
+  transition: all 0.5s ease;
+}
+.container .me .neck.look-left:before {
+  left: -38px;
+}
+.container .me .neck.look-right:before {
+  left: -5px;
+}
+.container .me .shirt {
+  position: absolute;
+  width: 80px;
+  height: 40px;
+  background: #b51231;
+  top: 105px;
+  border-radius: 100px 100px 10px 10px;
+  overflow: hidden;
+}
+.container .me .shirt:after {
+  content: "\2665";
+  position: absolute;
+  color: #870d24;
+  top: 15px;
+  left: 50px;
+}
+.container .me .hair {
+  transition: all 0.5s ease;
+  position: absolute;
+  width: 90px;
+  height: 120px;
+  left: -8%;
+  top: -10%;
+}
+.container .me .hair .first-row, .container .me .hair .second-row, .container .me .hair .third-row, .container .me .hair .fourth-row, .container .me .hair .fifth-row {
+  position: absolute;
+}
+.container .me .hair .first-row span, .container .me .hair .second-row span, .container .me .hair .third-row span, .container .me .hair .fourth-row span, .container .me .hair .fifth-row span {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background: black;
+  position: absolute;
+}
+.container .me .hair .first-row span:nth-child(1), .container .me .hair .second-row span:nth-child(1), .container .me .hair .third-row span:nth-child(1), .container .me .hair .fourth-row span:nth-child(1), .container .me .hair .fifth-row span:nth-child(1) {
+  top: 5px;
+}
+.container .me .hair .first-row span:nth-child(2), .container .me .hair .second-row span:nth-child(2), .container .me .hair .third-row span:nth-child(2), .container .me .hair .fourth-row span:nth-child(2), .container .me .hair .fifth-row span:nth-child(2) {
+  left: 30px;
+}
+.container .me .hair .first-row span:nth-child(3), .container .me .hair .second-row span:nth-child(3), .container .me .hair .third-row span:nth-child(3), .container .me .hair .fourth-row span:nth-child(3), .container .me .hair .fifth-row span:nth-child(3) {
+  left: 60px;
+  top: 5px;
+}
+.container .me .hair .first-row span:nth-child(4), .container .me .hair .second-row span:nth-child(4), .container .me .hair .third-row span:nth-child(4), .container .me .hair .fourth-row span:nth-child(4), .container .me .hair .fifth-row span:nth-child(4) {
+  left: 15px;
+}
+.container .me .hair .first-row span:nth-child(5), .container .me .hair .second-row span:nth-child(5), .container .me .hair .third-row span:nth-child(5), .container .me .hair .fourth-row span:nth-child(5), .container .me .hair .fifth-row span:nth-child(5) {
+  border-radius: 80%;
+  left: 45px;
+}
+.container .me .hair .second-row {
+  top: 20px;
+}
+.container .me .hair .third-row {
+  top: 40px;
+}
+.container .me .hair .fourth-row {
+  top: 60px;
+  left: 2px;
+}
+.container .me .hair .fourth-row span {
+  width: 25px;
+  height: 25px;
+}
+.container .me .hair .fifth-row {
+  top: 80px;
+  left: 7.2px;
+}
+.container .me .hair .fifth-row span {
+  width: 15px;
+  height: 15px;
+}
+.container .me .hair.look-left {
+  width: 55px;
+  left: -17px;
+}
+.container .me .hair.look-right {
+  width: 55px;
+  left: 2px;
+}
+
+@keyframes blink {
+  0% {
+    transform: scaleY(1);
+  }
+  18% {
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(0);
+  }
+  25% {
+    transform: scaleY(1);
+  }
+  38% {
+    transform: scaleY(1);
+  }
+  40% {
+    transform: scaleY(0);
+  }
+  45% {
+    transform: scaleY(1);
+  }
+  80% {
+    transform: scaleY(1);
+  }
+}
