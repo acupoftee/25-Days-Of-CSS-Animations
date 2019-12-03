@@ -4,13 +4,23 @@
 <p>Code from my 25 Days of CSS Animations challenge on CodePen.</p>
 </div>
 
-### About
+### ✨ About
 This year I spent 25 days practicing CSS with animations ✨This repo has the source code for
 each animation!
+
+### 🤓 File Structure
+Here's what you'll find when visiting each animation folder:
+
+* `src`
+  * Contains the original code as written on CodePen and Visual Studio Code.
+* `dist`
+  * Contains code that's been translated for browsers by CodePen. Because web browsers only understand [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML), [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS), and [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), and not the alternatives used in this challenge, this allows my original code to be understood and displayed on the web \o/
+
+### 📋 Relevant Links
 * [DEV post](https://dev.to/acupoftee/25-days-of-css-animations-teaching-myself-css-through-motion-design-4l10)
 * [CodePen collection](https://codepen.io/collection/DBeLyg)
 
-### Animations
+### 🎨 Animations
 * [Day 1: Hello CSS](day-1-hello-css/README.markdown)
 * [Day 2: Pokeball, Go!](day-2-pokeball-go/README.markdown)
 * [Day 3: Egghead in Love](day-3-egg-head-in-love/README.markdown)
