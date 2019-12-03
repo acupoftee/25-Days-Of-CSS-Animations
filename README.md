@@ -5,8 +5,8 @@
 </div>
 
 ### ✨ About
-This year I spent 25 days practicing CSS with animations ✨This repo has the source code for
-each animation!
+This year I spent 25 days practicing CSS with animations! This repo has the source code for
+each animation.
 
 ### 🤓 File Structure
 Here's what you'll find when visiting each animation folder:
